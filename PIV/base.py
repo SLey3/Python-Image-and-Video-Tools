@@ -22,6 +22,16 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # For more information, please refer to <https://unlicense.org>
+"""
+base variable definitions
+"""
+from __future__ import absolute_import
+import sys
+import os
+import re
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 FILE_EXTENSIONS = {
     'image':[
@@ -67,7 +77,28 @@ FILE_EXTENSIONS = {
         '.eps'
     ],
     'video':[
+        '.mp2',
         '.mp3',
-        '.mp4'
+        '.mp4',
+        '.m4p',
+        '.m4v',
+        '.webm',
+        '.mpg',
+        '.mpeg',
+        '.mpe',
+        '.mpv',
+        '.ogg',
+        '.avi',
+        '.wmv',
+        '.mov',
+        '.qt',
+        '.flv',
+        '.swf',
+        '.avchd'
     ]
 }
+READONLY = 0
+
+OPEN = {}
+
+SAVE = {}

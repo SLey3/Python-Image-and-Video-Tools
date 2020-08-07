@@ -22,9 +22,66 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # For more information, please refer to <https://unlicense.org>
+"""
+Heart of the module
+"""
+from __future__ import absolute_import
 import sys
 import os
 from PIL import Image
-from base import *
-from exceptions import *
 import io
+import builtins
+from pathlib import Path
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+from PIV.base import *
+from PIV.exceptions import *
+
+class ImageTools:
+    """
+    Tools for Image modification and data
+    """
+    def __init__(self):
+        self.image = open(image)
+        self._size = (0,0)
+    @property
+    def _width(self):
+        """
+        Returns the width of Image
+        """
+        return self._size[0]
+    @property
+    def _height(self):
+        """
+        Returns the height of Image
+        """
+        return self._size[1]
+    @property
+    def size(self):
+        """
+        Returns the size of the Image
+        """
+        return self._size
+    def __enter__(self):
+        """
+        Returns self
+        """
+        return self
+    
+    def openImage(image, mode='r'):
+        """
+        Opens the Image filepath.
+        :param image: File path of image
+        :param mode: The mode when reading the Image. If presnt, must always be "r"
+        """
+        if mode != 'r':
+            raise ValueError("Bad mode %r" % mode)
+        elif isinstance(image, io.StringIO):
+            raise ValueError("Image can not be used in StringIO. Binary data must be used.")
+        exclusive_image = False
+        image_name = ""
+        if isinstance(image, Path):
+            filename = str(image.resolve())
+        #elif isPath(image):
+            

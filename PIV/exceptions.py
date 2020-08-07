@@ -22,25 +22,33 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # For more information, please refer to <https://unlicense.org>
-class ImageNotFound(Exception):
+"""
+Exceptions created for the module
+"""
+from __future__ import absolute_import
+import sys
+import os
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+
+class PIVerror(Exception):
+    """
+    Standard exception
+    """
+class ImageNotFound(PIVerror):
     """
     Error raised when an Image is not found.
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
     """
     pass
 
-class VideoNotFound(Exception):
+class VideoNotFound(PIVerror):
     """
     Error raised when a video is not found.
-    Attributes:
-        expression -- input expression in which the error occurred
-        message -- explanation of the error
     """
     pass
 
-class InvalidExtention(Exception):
+class InvalidExtention(PIVerror):
     """
     Error raised when incorrect file extension is used.
     """
