@@ -36,13 +36,13 @@ class PIVerror(Exception):
     """
     Standard exception
     """
-class ImageNotFound(PIVerror):
+class ImageNotFound(FileNotFoundError):
     """
     Error raised when an Image is not found.
     """
     pass
 
-class VideoNotFound(PIVerror):
+class VideoNotFound(FileNotFoundError):
     """
     Error raised when a video is not found.
     """
