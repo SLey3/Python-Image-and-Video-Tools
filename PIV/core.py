@@ -28,41 +28,47 @@ Heart of the module
 from __future__ import absolute_import
 import sys
 import os
+from typing import List
 from PIL import Image
+from PIL import UnidentifiedImageError
 import io
 import imghdr
-from pathlib import Path
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from PIV.base import *
 from PIV.exceptions import *
+from PIV.check import *
+import PIV.info as info
 class ImageTools:
     """
     Tools for Image modification and data
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image, perm_save:bool):
-        self.raw_image = image
-        self.image_name = self._name
-        self.PIL_image = Image.open(image, mode='r')
-        self.image = '.' + self._format
-        self._size = self.PIL_image.size
-        self.perm_save = perm_save
-        if perm_save == True:
-            self.path_list = PERM_SAVE
+    def __init__(self, image: str, perm_save: bool):
+        if check_image_file(image, info.name(image), info.extension(image)):
+            self.raw_image = image
+            self.image_name = self._name
+            PIL_image = Image.open(image, mode='r')
+            self.image_ext = '.' + self._format
+            self._size = PIL_image.size
+            self.perm_save = perm_save
+            self.image = self.image_name + self.image_ext
+            if perm_save:
+                self.path_list = PERM_SAVE
+            else:
+                self.path_list = TEMP_SAVE
         else:
-            self.path_list = TEMP_SAVE
+            raise ImageNotFound("{image_file} either does not exists or cannot be found due to a typo or incorrect filepath.".format(image_file=image))  # noqa: 501
 
-    
     @property
     def _format(self):
         """
         returns the file extension of the file
         """
         return imghdr.what(self.raw_image)
-    
+            
     @property
     def _name(self):
         """
@@ -89,6 +95,7 @@ class ImageTools:
     def _binary(self):
         bin_data = io.open(self.raw_image, 'rb', buffering=0)
         return bin_data.read()
+    
     @property
     def size(self):
         """
@@ -96,44 +103,49 @@ class ImageTools:
         """
         return self._size
     
-    def _path(self, save=False):
+    @staticmethod
+    def available_ext() -> List[str]:
         """
-        Shows file path of the image
-        :param save: If true, it will save the file path of the image untill the close function is runned. If the perm_save optioned was set to true in the initialization, then it would permanently save the path
+        Returns all the currently supported image extensions
         """
-        dir_entries = os.scandir('./')
-        for entry in dir_entries:
-            if entry.is_file():
-                PATH_ENTRIES.append(entry.name)
-                for entries in PATH_ENTRIES:
-                    if entries == self.raw_image:
-                        if save:
-                            self.path_list.append(entries)
-                            break
-                        else:
-                            return entries
-                    else:
-                        raise ImageNotFound("Image not found in current directory")
-        return self.path_list[0]
+        file_list = FILE_EXTENSIONS['image']
+        return sorted(file_list)
     
-    def convertFile(self, file_extention="", with_path=False, image=None):
+    def _path(self, save=False) -> str:
+        """
+        Returns the file path of the Image
+        :param save: If true, it will save by default into the TEMP_SAVE list or if perm save was enabled, will save the path to the PERM_SAVE list instead
+        """  # noqa: E501
+        if save:
+            self.path_list.append(self.raw_image)
+            return self.raw_image
+        else:
+            return self.raw_image
+    
+    def convertFile(self, file_extention = "", with_path=False):
         """
         Converts the image's extension
         :param file_extension: The New file extension that would replace the old file extension
         :param with_path: If true, The original image will be declared with its filepath and the new image file will be sent to same path as the orignal
         :param image: created to add the chosen image extension
-        """
-        image_ext = self.image
+        """  # noqa: E501
+        image_ext = self.image_ext
+        image = self.image
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
         else:
-            raise InvalidExtention("{} is not a valid image extention.".format(file_extension))
+            raise InvalidExtention("{} is not a valid image extention.".format(file_extention))
 
         if image_ext not in FILE_EXTENSIONS['image']:
             raise InvalidExtention("{} is not a valid image extention.".format(image))   
         if with_path:
-            image = os.rename(self.raw_image, ) 
-        image = os.rename(self.image_name + image_ext, self.image_name + fe)
+            original_path = self._path()
+            path_exc = original_path.replace('\\' + image, '')
+            print(path_exc)
+            os.chdir(path_exc)
+            os.rename(image, self.image_name + fe) 
+        else:
+            os.rename(image, self.image_name + fe) 
         
     def __enter__(self):
         """
@@ -145,4 +157,4 @@ class ImageTools:
         """
         Returns unambiguous result
         """
-        return (f'{self.__class__.__name__}('f'{self.raw_image!r}, {self.perm_save!r})')
+        return (f'{self.__class__.__name__}('f'{self.raw_image!r}, {self.perm_save!r})'.format(self=self))
