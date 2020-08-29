@@ -17,7 +17,6 @@ Examples
 Using the ``ImageTools`` class to convert an image file:
 
 .. code-block:: python
-    :linenos:
 
     from PIV import ImageTools
     import os
