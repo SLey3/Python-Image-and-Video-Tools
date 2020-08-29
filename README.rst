@@ -1,3 +1,8 @@
+.. TODO
+.. 1) Fill in outline
+.. 2) add all possible small tags to the README doc
+.. 3) Improve the README doc for any errors and add more explanation
+
 ============================
 Python Image and Video Tools
 ============================
@@ -12,6 +17,7 @@ Examples
 Using the ``ImageTools`` class to convert an image file:
 
 .. code-block:: python
+    :linenos:
 
     from PIV import ImageTools
     import os
