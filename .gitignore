@@ -1,2 +1,4 @@
 .vscode/
+.vs/
+.pytest_cache/
 __pycache__/

@@ -26,22 +26,21 @@
 Necessary checks for the module
 """
 from PIV.base import FILE_EXTENSIONS
-from os.path import exists
+import os
 import logging
-
-logger = logging.getLogger(__name__)
 
 def check_image_file(file_path, name, ext) -> bool:
     """
     checks if the file is an image file or if the image file exists
     """
-    if exists(file_path) and ext in FILE_EXTENSIONS['image']:
+    logger = logging.getLogger(__name__)
+    if os.path.exists(file_path) and ext in FILE_EXTENSIONS['image']:
         logger.log(0, "File is an Image file and exists.")
         return True
     else:
         file_tuple = (name, ext)
         file_name = name + ext
-        if file_tuple[1] in FILE_EXTENSIONS['video'] and exists(file_path):
+        if file_tuple[1] in FILE_EXTENSIONS['video'] and os.path.exists(file_path):
             logger.log(1, "File was a Video File.")
             raise ValueError("{name} is not an Image file.".format(name=file_name))
         else:
@@ -49,13 +48,17 @@ def check_image_file(file_path, name, ext) -> bool:
             return False
         
 def check_video_file(file_path, name, ext) -> bool:
-    if exists(file_path) and ext in FILE_EXTENSIONS['video']:
+    """
+    checks if the file is a video file or if the video exists
+    """
+    logger = logging.getLogger(__name__)
+    if os.path.exists(file_path) and ext in FILE_EXTENSIONS['video']:
         logger.log(0, "File is a Video file and exists.")
         return True
     else:
         file_tuple = (name, ext)
         file_name = name + ext
-        if file_tuple[1] in FILE_EXTENSIONS['image'] and exists(file_path):
+        if file_tuple[1] in FILE_EXTENSIONS['image'] and os.path.exists(file_path):
             logger.log(1, "File was an Image File.")
             raise ValueError("{name} is not a Video file.".format(name=file_name))
         else:

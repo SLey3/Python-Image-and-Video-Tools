@@ -25,10 +25,8 @@
 """
 base variable definitions
 """
-from __future__ import absolute_import
 import sys
 import os
-import io
 
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))

@@ -29,6 +29,7 @@ from __future__ import absolute_import
 import sys
 import os
 from typing import List
+from typing import Any
 from PIL import Image
 from PIL import UnidentifiedImageError
 import io
@@ -46,7 +47,7 @@ class ImageTools:
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image: str, perm_save: bool):
+    def __init__(self, image: str, perm_save: bool) -> Any:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
@@ -111,7 +112,7 @@ class ImageTools:
         file_list = FILE_EXTENSIONS['image']
         return sorted(file_list)
     
-    def _path(self, save=False) -> str:
+    def _path(self, save: bool=False) -> str:
         """
         Returns the file path of the Image
         :param save: If true, it will save by default into the TEMP_SAVE list or if perm save was enabled, will save the path to the PERM_SAVE list instead
@@ -122,7 +123,7 @@ class ImageTools:
         else:
             return self.raw_image
     
-    def convertFile(self, file_extention = "", with_path=False):
+    def convertFile(self, file_extention: str = "", with_path: bool =False):
         """
         Converts the image's extension
         :param file_extension: The New file extension that would replace the old file extension
@@ -153,8 +154,19 @@ class ImageTools:
         """
         return self
     
+    def __exit__(self, type, value, traceback):
+        """
+        Exits self
+        """
+        return True
+    
     def __repr__(self):
         """
         Returns unambiguous result
         """
         return (f'{self.__class__.__name__}('f'{self.raw_image!r}, {self.perm_save!r})'.format(self=self))
+    
+    
+with ImageTools as i:
+    print(i.available_ext())
+    
