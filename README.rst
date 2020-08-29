@@ -3,7 +3,7 @@ Python Image and Video Tools
 ============================
 Python Image and Video Tools provides support for Image and Video editing. 
 
-**Using the `ImageTools` class to convert an image file:**
+Using the ``ImageTools`` class to convert an image file:
 
 .. code-block:: python
 
@@ -15,5 +15,3 @@ Python Image and Video Tools provides support for Image and Video editing.
     image = ImageTools(path, False)
 
     image.convertFile(".jpg")
-
-Along with being able to convert files...
