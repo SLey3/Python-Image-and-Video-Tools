@@ -3,13 +3,13 @@
 import os
 import sys
 import shutil
+import pytest
 from PIV import ImageTools
 from PIV.base import BINARY
 from PIV.base import FILE_EXTENSIONS
 # Image path
-__dir__ = os.getcwd() + '\\docs\\test_utils\\test_image\\testbird.jfif'
 TEST_VIDEO_DIR = os.getcwd() + '\\docs\\test_utils\\test_video\\pop.mp4'
-TEST_IMAGE_DIR = os.path.normpath(__dir__)
+TEST_IMAGE_DIR = os.getcwd() + '\\docs\\test_utils\\test_image\\testbird.jfif'
 
 # tests
 
@@ -52,7 +52,8 @@ def name():
 
 def test_name():
     assert name() == 'testbird'
-    
+ 
+@pytest.fixture
 def size():
     # first initializes the Image tools class
     test_image = ImageTools(TEST_IMAGE_DIR, False)
@@ -60,14 +61,15 @@ def size():
     test_size = test_image.size
     return test_size
 
-def test_size():
-    assert size() == (251, 201)
+
+def test_size(size):
+    assert size == (251, 201)
 
 def path():
     # first initializes the Image tools class
     test_image = ImageTools(TEST_IMAGE_DIR, False)
     # finally, calls the path property
-    test_path = test_image._path
+    test_path = test_image._path()
     return test_path
 
 def test_path():
@@ -103,7 +105,8 @@ def rep():
     return repr(test_image)
 
 def test_rep():
-    assert rep() == "ImageTools('C:\\Users\\ghub4\\OneDrive\\Desktop\\Python-Image-and-Video-tools\\docs\\Images\\test_images\\testbird.jfif', False)"
+    test = ImageTools('C:\\Users\\ghub4\\Python-Image-and-Video-tools\\docs\\test_utils\\test_image\\testbird.jfif', False)
+    assert rep() == repr(test)
     
 def file_exts():
     # Skips initialization as image is not needed and calls the available_exts property

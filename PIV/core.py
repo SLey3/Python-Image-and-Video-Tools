@@ -51,9 +51,9 @@ class ImageTools:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
-            PIL_image = Image.open(image, mode='r')
+            self.PIL_image = Image.open(image, mode='r')
             self.image_ext = '.' + self._format
-            self._size = PIL_image.size
+            self._size = self.PIL_image.size
             self.perm_save = perm_save
             self.image = self.image_name + self.image_ext
             if perm_save:
@@ -109,10 +109,10 @@ class ImageTools:
         """
         Returns all the currently supported image extensions
         """
-        file_list = FILE_EXTENSIONS['image']
-        return sorted(file_list)
+        # Bug: 2 list copies made when 1 is supposed to be returned
+        return sorted(FILE_EXTENSIONS['image'])
     
-    def _path(self, save: bool=False) -> str:
+    def _path(self, save: bool = False) -> str:
         """
         Returns the file path of the Image
         :param save: If true, it will save by default into the TEMP_SAVE list or if perm save was enabled, will save the path to the PERM_SAVE list instead
@@ -123,7 +123,7 @@ class ImageTools:
         else:
             return self.raw_image
     
-    def convertFile(self, file_extention: str = "", with_path: bool =False):
+    def convertFile(self, file_extention: str = "", with_path: bool = False): # noqa: E252
         """
         Converts the image's extension
         :param file_extension: The New file extension that would replace the old file extension
@@ -147,7 +147,17 @@ class ImageTools:
             os.rename(image, self.image_name + fe) 
         else:
             os.rename(image, self.image_name + fe) 
-        
+    
+    def close(self):
+        """
+        Closes the ImageTools class
+        """
+        if self.path_list == TEMP_SAVE:
+            self.path_list.clear()
+            
+        del self.path_list
+        self.PIL_image.close()
+            
     def __enter__(self):
         """
         Returns self
@@ -158,15 +168,10 @@ class ImageTools:
         """
         Exits self
         """
-        return True
+        self.close()
     
     def __repr__(self):
         """
         Returns unambiguous result
         """
         return (f'{self.__class__.__name__}('f'{self.raw_image!r}, {self.perm_save!r})'.format(self=self))
-    
-    
-with ImageTools as i:
-    print(i.available_ext())
-    

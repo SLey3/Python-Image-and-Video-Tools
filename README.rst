@@ -32,5 +32,4 @@ Installation
 
 Contribution
 ~~~~~~~~~~~~~~~~~~
-
 .. figure:: docs/CONTRIBUTING.md
