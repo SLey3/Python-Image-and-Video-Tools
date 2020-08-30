@@ -20,6 +20,7 @@
 project = 'Python Image and Video Tools'
 copyright = '2020, Sergio Ley Languren'
 author = 'Sergio Ley Languren'
+language = 'en'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0.0'
@@ -45,6 +46,12 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# The encoding of all reST source files
+source_encoding = 'utf-8'
+
+# If set to a major.minor version string like '1.1', 
+# Sphinx will compare it with its version and refuse to build if it is too old
+needs_sphinx = '3.2.1'
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -53,6 +60,8 @@ exclude_patterns = []
 #
 html_theme = 'sphinx_rtd_theme'
 
+# A dictionary of options that influence the look and feel of the selected theme. 
+# These are theme-specific.
 html_theme_options = {
     'canonical_url': '',
     'logo_only': False,
@@ -65,6 +74,20 @@ html_theme_options = {
     'includehidden': False,
     'titles_only': False
 }
+
+# The style of line numbers for code-blocks.
+html_codeblock_linenos_style = 'inline'
+
+# If true, “Created using Sphinx” is shown in the HTML footer. 
+html_show_sphinx = False
+
+# Encoding of HTML output files. 
+# Note that this encoding name must both be a valid Python encoding name and a valid HTML charset value.
+html_output_encoding = 'utf-8'
+
+# Language to be used for generating the HTML full-text search index. 
+# This defaults to the global language selected with language.
+html_search_language = 'en'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
