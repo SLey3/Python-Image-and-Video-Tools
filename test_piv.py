@@ -41,7 +41,7 @@ def ext():
     return test_format
 
 def test_ext():
-    assert ext() == 'jpeg'
+    assert ext() == 'jfif'
 
 def name():
     # first initializes the Imagetools class
