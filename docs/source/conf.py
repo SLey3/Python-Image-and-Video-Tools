@@ -30,7 +30,11 @@ release = '1.0.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+import sphinx_rtd_theme
 extensions = [
+    'sphinx.ext.todo',
+    'sphinx.ext.doctest',
+    'sphinx_rtd_theme'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -47,9 +51,37 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
+
+html_theme_options = {
+    'canonical_url': '',
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'both',
+    'style_external_link': False,
+    'navigation_depth': 2,
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'include_hidden': False,
+    'titles_only': False
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# -- Doctest configuration -------------------------------------------------
+
+# If this is a nonempty string (the default is 'default'), 
+# standard reST doctest blocks will be tested too. They will be assigned to the group name given.
+# reST doctest blocks are simply doctests put into a paragraph of their own
+# (Note that no special :: is used to introduce a doctest block; 
+#  docutils recognizes them from the leading >>>. 
+#  Also, no additional indentation is used, though it doesn’t hurt.)
+doctest_test_doctest_blocks = 'default'
+
+# -- todo configuration -------------------------------------------------
+
+#  todo and todolist produce output.
+todo_include_todos = True

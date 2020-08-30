@@ -1,4 +1,13 @@
+# Visual studio folders
 .vscode/
 .vs/
+
+# pytest folders
 .pytest_cache/
+v/
+
+# python cache
 __pycache__/
+
+# Sphinx build folder
+build/

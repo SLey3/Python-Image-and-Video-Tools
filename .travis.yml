@@ -1,0 +1,16 @@
+language: python
+python:
+  - 3.8
+
+# Installs dev dependencies
+install:
+  - cd docs
+  - pip install -r dev-requirements.txt
+
+# Runs tests
+script:
+  - flake8 --statistics --count
+
+# notification settings
+notifications:
+  email: false

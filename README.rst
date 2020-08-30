@@ -27,6 +27,19 @@ Using the ``ImageTools`` class to convert an image file:
 
     image.convertFile(".jpg")
 
+Using the ``ImageTools`` class to convert an image file using a **with statement**:
+
+.. code-block:: python
+
+    from PIV import ImageTools
+    import os
+
+    path = os.path.expanduser(os.getenv('USERPROFILE')) + '\\name.png'
+
+    with ImageTools(path, False) as i:
+        i.convertFile(".jpg")
+
+
 Installation
 ~~~~~~~~~~~~~~~~~~
 

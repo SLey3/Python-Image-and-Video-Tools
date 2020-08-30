@@ -33,7 +33,6 @@ from typing import Any
 from PIL import Image
 from PIL import UnidentifiedImageError
 import io
-import imghdr
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
@@ -68,7 +67,9 @@ class ImageTools:
         """
         returns the file extension of the file
         """
-        return imghdr.what(self.raw_image)
+        filename = os.path.basename(self.raw_image)
+        image_extension = os.path.splitext(filename)
+        return image_extension[1]
             
     @property
     def _name(self):
