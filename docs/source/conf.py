@@ -58,11 +58,11 @@ html_theme_options = {
     'logo_only': False,
     'display_version': True,
     'prev_next_buttons_location': 'both',
-    'style_external_link': False,
+    'style_external_links': False,
     'navigation_depth': 2,
     'collapse_navigation': True,
     'sticky_navigation': True,
-    'include_hidden': False,
+    'includehidden': False,
     'titles_only': False
 }
 
