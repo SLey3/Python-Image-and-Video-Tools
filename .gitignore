@@ -1,6 +1,5 @@
-# Visual studio folders
+# Visual studio code folder
 .vscode/
-.vs/
 
 # pytest folders
 .pytest_cache/
