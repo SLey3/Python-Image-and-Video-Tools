@@ -8,7 +8,10 @@ Welcome to Python Image and Video Tools's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Documetation Contents:
+   
+   usage
+   
 
 
 
