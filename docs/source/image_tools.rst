@@ -63,7 +63,7 @@ size
 
 available_ext
 ~~~~~~~~~~~~~
-*Returns all of the image extensions that are currently defined in the ``FILE_EXTENSIONS`` list.*
+*Returns all of the image extensions that are currently supported.*
 
 .. note::
     *This function can be used without initializing the class.*
