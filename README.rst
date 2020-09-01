@@ -20,6 +20,7 @@ Examples
 Using the ``ImageTools`` class to convert an image file:
 
 .. code-block:: python
+    :linenos:
 
     from PIV import ImageTools
     import os
@@ -33,6 +34,7 @@ Using the ``ImageTools`` class to convert an image file:
 Using the ``ImageTools`` class to convert an image file using a **with statement**:
 
 .. code-block:: python
+    :linenos:
 
     from PIV import ImageTools
     import os

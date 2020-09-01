@@ -55,6 +55,7 @@ class ImageTools:
             self._size = self.PIL_image.size
             self.perm_save = perm_save
             self.image = self.image_name + self.image_ext
+            self.fp_regex = PATH_REGEX
             if perm_save:
                 self.path_list = PERM_SAVE
             else:
@@ -95,6 +96,9 @@ class ImageTools:
     
     @property
     def _binary(self):
+        """
+        Returns the binary data of the Image
+        """
         bin_data = io.open(self.raw_image, 'rb', buffering=0)
         return bin_data.read()
     
@@ -118,11 +122,22 @@ class ImageTools:
         Returns the file path of the Image
         :param save: If true, it will save by default into the TEMP_SAVE list or if perm save was enabled, will save the path to the PERM_SAVE list instead
         """  # noqa: E501
-        if save:
-            self.path_list.append(self.raw_image)
-            return self.raw_image
+        directory = os.path.abspath('.')
+        if self.fp_regex.match(self.raw_image):
+            if save:
+                self.path_list.append(self.raw_image)
+                return self.raw_image
+            else:
+                return self.raw_image
         else:
-            return self.raw_image
+            for file in os.listdir(directory):
+                if self.raw_image == file:
+                    path = os.path.abspath(os.path.join(directory, file))
+                    if save:
+                        self.path_list.append(path)
+                        return path
+                    else:
+                        return path
     
     def convertFile(self, file_extention: str = "", with_path: bool = False): # noqa: E252
         """

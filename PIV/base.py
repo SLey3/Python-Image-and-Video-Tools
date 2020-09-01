@@ -27,6 +27,7 @@ base variable definitions
 """
 import sys
 import os
+import re
 
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
@@ -97,6 +98,8 @@ FILE_EXTENSIONS = {
         '.avchd'
     ]
 }
+
+PATH_REGEX = re.compile(r'^(.*/)?(?:$|(.+?)(?:(\.[^.]*$)|$))')
 
 TEMP_SAVE = []
 
