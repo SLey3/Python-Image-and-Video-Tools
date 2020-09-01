@@ -6,7 +6,7 @@
 ============================
 Python Image and Video Tools
 ============================
-.. image:: https://travis-ci.com/SLey3/Python-Image-and-Video-Tools.svg?branch=master
+.. image:: https://travis-ci.com/SLey3/Python-Image-and-Video-Tools.svg?token=BwisYM6yx8jxt6nje3y4&branch=master
     :target: https://travis-ci.com/SLey3/Python-Image-and-Video-Tools
     
 Python Image and Video Tools is a Image and Video tool provider that helps developers with editing an Image or a Video 
