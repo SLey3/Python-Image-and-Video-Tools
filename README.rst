@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools?ref=badge_shield)
+
 .. TODO
 .. 1) Fill in outline
 .. 2) add all possible small tags to the README doc
@@ -49,3 +51,7 @@ Installation
 Contribution
 ~~~~~~~~~~~~~~~~~~
 .. figure:: docs/CONTRIBUTING.md
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools?ref=badge_large)
