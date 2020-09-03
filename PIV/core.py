@@ -28,6 +28,7 @@ Heart of the module
 from __future__ import absolute_import
 import sys
 import os
+import glob
 from typing import List
 from typing import Any
 from PIL import Image
@@ -117,12 +118,11 @@ class ImageTools:
         # Bug: 2 list copies made when 1 is supposed to be returned
         return sorted(FILE_EXTENSIONS['image'])
     
-    def _path(self, save: bool = False) -> str:
+    def path(self, save: bool = False) -> str:
         """
         Returns the file path of the Image
         :param save: If true, it will save by default into the TEMP_SAVE list or if perm save was enabled, will save the path to the PERM_SAVE list instead
         """  # noqa: E501
-        directory = os.path.abspath('.')
         if self.fp_regex.match(self.raw_image):
             if save:
                 self.path_list.append(self.raw_image)
@@ -130,14 +130,32 @@ class ImageTools:
             else:
                 return self.raw_image
         else:
-            for file in os.listdir(directory):
+            directory = os.path.abspath('.')
+            for file in glob.glob('*' + self._format):
                 if self.raw_image == file:
-                    path = os.path.abspath(os.path.join(directory, file))
+                    path = os.path.normpath(os.path.join(directory, file))
                     if save:
                         self.path_list.append(path)
-                        return path
-                    else:
-                        return path
+                else:
+                    os.chdir('..')
+                    directory = os.path.abspath('.')
+                    fp_found = False
+                    while fp_found != True:
+                        for file in glob.glob('*' + self._format):
+                            if file == self.raw_image:
+                                path = os.path.normpath(os.path.join(directory, file))
+                            else:
+                                pass
+                        if os.path.isfile(path):
+                            if save:
+                                self.path_list.append(path)
+                                fp_found = True
+                            else:
+                                fp_found = True
+                        else:
+                            os.chdir('..')
+                            directory = os.path.abspath('.')
+        return path
     
     def convertFile(self, file_extention: str = "", with_path: bool = False): # noqa: E252
         """
@@ -152,11 +170,9 @@ class ImageTools:
             fe = file_extention
         else:
             raise InvalidExtention("{} is not a valid image extention.".format(file_extention))
-
-        if image_ext not in FILE_EXTENSIONS['image']:
-            raise InvalidExtention("{} is not a valid image extention.".format(image))   
+        
         if with_path:
-            original_path = self._path()
+            original_path = self.path()
             path_exc = original_path.replace('\\' + image, '')
             print(path_exc)
             os.chdir(path_exc)

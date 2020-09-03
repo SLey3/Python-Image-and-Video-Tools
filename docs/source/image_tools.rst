@@ -70,3 +70,32 @@ available_ext
 
 .. todo::
     *Fix the function from printing the list two times.*
+
+path
+~~~~
+*Returns the filepath of the Image file.*
+
+**Argument:**
+- `save`: If True then it will save the filepath to the pathlist chosen when the class was initialized.
+Otherwise, the `save` argument will return False.
+
+**Example:**
+
+.. code-block:: python
+    :linenos:
+
+    # Example file structure:
+    # ImageTesting
+    # |  Image_path_example
+    # |                    | path_test.py
+    # |  cat.png
+    #
+    # Example:
+
+    with ImageTools('cat.png', True) as i:
+        path = i.path(True)
+    print(path)
+    # prints: c:\Users\mack\ImageTesting\cat.png
+
+.. todo::
+    *Make showing example in an online IDE like repl*

@@ -26,6 +26,7 @@
 Necessary checks for the module
 """
 from PIV.base import FILE_EXTENSIONS
+from PIV.exceptions import InvalidExtention
 import os
 import logging
 
@@ -43,8 +44,11 @@ def check_image_file(file_path, name, ext) -> bool:
         if file_tuple[1] in FILE_EXTENSIONS['video'] and os.path.exists(file_path):
             logger.log(1, "File was a Video File.")
             raise ValueError("{name} is not an Image file.".format(name=file_name))
+        elif os.path.exists(file_path) and file_tuple[1] not in FILE_EXTENSIONS['image']:
+            logger.log(2, "File does exist but the file extension is not recognised.")
+            raise InvalidExtention("{extension} is not a supported file extension or is not an extention.".format(extension=file_tuple[1]))
         else:
-            logger.log(2, "Image file not found or does not exist.")
+            logger.log(3, "Image file not found or does not exist.")
             return False
         
 def check_video_file(file_path, name, ext) -> bool:
@@ -61,6 +65,9 @@ def check_video_file(file_path, name, ext) -> bool:
         if file_tuple[1] in FILE_EXTENSIONS['image'] and os.path.exists(file_path):
             logger.log(1, "File was an Image File.")
             raise ValueError("{name} is not a Video file.".format(name=file_name))
+        elif os.path.exists(file_path) and file_tuple[1] not in FILE_EXTENSIONS['video']:
+            logger.log(2, "File does exists but the file extension is not recognized.")
+            raise InvalidExtention("{extension} is not a supported file extension or is not an extension.".format(extension=file_tuple[1]))
         else:
-            logger.log(2, "Video file not found or does not exist.")
+            logger.log(3, "Video file not found or does not exist.")
             return False
