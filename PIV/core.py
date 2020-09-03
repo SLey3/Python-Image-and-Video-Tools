@@ -113,7 +113,8 @@ class ImageTools:
     @staticmethod
     def available_ext() -> List[str]:
         """
-        Returns all the currently supported image extensions
+        Returns all the currently supported 
+        image extensions
         """
         # Bug: 2 list copies made when 1 is supposed to be returned
         return sorted(FILE_EXTENSIONS['image'])
@@ -140,7 +141,7 @@ class ImageTools:
                     os.chdir('..')
                     directory = os.path.abspath('.')
                     fp_found = False
-                    while fp_found != True:
+                    while fp_found != True:  # noqa: E712
                         for file in glob.glob('*' + self._format):
                             if file == self.raw_image:
                                 path = os.path.normpath(os.path.join(directory, file))
@@ -164,7 +165,6 @@ class ImageTools:
         :param with_path: If true, The original image will be declared with its filepath and the new image file will be sent to same path as the orignal
         :param image: created to add the chosen image extension
         """  # noqa: E501
-        image_ext = self.image_ext
         image = self.image
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
