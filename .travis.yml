@@ -2,14 +2,20 @@ language: python
 python:
   - 3.8
 
+before_install:
+  - cd docs
 # Installs dev dependencies
 install:
-  - cd docs
   - pip install -r dev-requirements.txt
+  - pip install coverage
 
 # Runs tests
 script:
   - flake8 --statistics --count
+  - coverage run -m pytest
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 # notification settings
 notifications:
