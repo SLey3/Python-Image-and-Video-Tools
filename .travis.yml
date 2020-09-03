@@ -14,7 +14,7 @@ install:
 
 # Runs tests
 script:
-  - coverage -m flake8 --statistics --count
+  - coverage run -m flake8 --statistics --count
   # Currently Buggy
   #- coverage run -m pytest 
 
