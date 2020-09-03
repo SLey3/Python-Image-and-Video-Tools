@@ -9,10 +9,11 @@ before_install:
 install:
   - pip install -r dev-requirements.txt
   - pip install coverage
+  - cd ..
+  - pip install pillow
 
 # Runs tests
 script:
-  - cd .. 
   - flake8 --statistics --count
   - coverage run -m pytest
 
