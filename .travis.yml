@@ -1,4 +1,5 @@
 language: python
+
 python:
   - 3.8
 
@@ -11,7 +12,7 @@ install:
 
 # Runs tests
 script:
-  - cd ..
+  - cd .. 
   - flake8 --statistics --count
   - coverage run -m pytest
 
