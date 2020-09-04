@@ -29,9 +29,12 @@ install:
 script:
   - coverage run -m flake8 --statistics --count
   # Currently Buggy
-  #- coverage run -m pytest 
+  - coverage run -m pytest 
 
 after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+after_failure:
   - bash <(curl -s https://codecov.io/bash)
 
 # notification settings
