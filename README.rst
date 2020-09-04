@@ -1,5 +1,3 @@
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools?ref=badge_shield)
-
 .. TODO
 .. 1) Fill in outline
 .. 2) add all possible small tags to the README doc
@@ -12,7 +10,7 @@ Python Image and Video Tools
     :target: https://travis-ci.com/SLey3/Python-Image-and-Video-Tools
 
 .. image:: https://app.fossa.com/api/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools.svg?type=shield
-    :target: https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools/refs/branch/master/252f4ffda6b16091c8d82dd6c0df5450b6d05f09
+    :target: https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools?ref=badge_large
     
 Python Image and Video Tools is a Image and Video tool provider that helps developers with editing an Image or a Video 
 and get information on the Image or Video file.
@@ -54,7 +52,3 @@ Installation
 Contribution
 ~~~~~~~~~~~~~~~~~~
 .. figure:: docs/CONTRIBUTING.md
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSLey3%2FPython-Image-and-Video-Tools?ref=badge_large)
