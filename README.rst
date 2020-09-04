@@ -21,7 +21,10 @@ Python Image and Video Tools
    
 .. image:: http://hits.dwyl.com/SLey3/Python-Image-and-Video-Tools.svg
     :target: http://hits.dwyl.com/SLey3/Python-Image-and-Video-Tools
-    
+
+.. image:: https://codecov.io/gh/SLey3/Python-Image-and-Video-Tools/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/SLey3/Python-Image-and-Video-Tools
+  
 Python Image and Video Tools is a Image and Video tool provider that helps developers with editing an Image or a Video 
 and get information on the Image or Video file.
 
