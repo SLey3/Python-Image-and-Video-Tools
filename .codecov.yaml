@@ -3,7 +3,7 @@ codecov:
   max_report_age: off
 
 coverage:
-  precision: 2
+  precision: 3
   round: down
   range: "70...100"
 
