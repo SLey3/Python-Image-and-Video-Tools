@@ -1,1 +1,4 @@
+# Module Dependencies
 pillow==7.2.0
+# Setup Dependency
+rstparse==1.0

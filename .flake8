@@ -3,8 +3,5 @@
 # Don't edit
 # ----------------------------
 max-line-length = 115
-exclude = docs, .git, .vs, .vscode, .pytest_cache, __pycache__
-# ----------------------------
-# May add more below but leave ignore alone unless if needed
-# ----------------------------
+exclude = docs, .git, .vscode, .pytest_cache, __pycache__
 ignore = W293, W291, W292, E231, E251, E261, E302, E402, F401, F402, F403, F405

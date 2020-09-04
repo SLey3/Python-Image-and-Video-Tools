@@ -78,8 +78,6 @@ FILE_EXTENSIONS = {
         '.img'
     ],
     'video':[
-        '.mp2',
-        '.mp3',
         '.mp4',
         '.m4p',
         '.m4v',
