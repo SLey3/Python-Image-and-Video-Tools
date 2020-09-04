@@ -31,12 +31,8 @@ script:
   # Currently Buggy
   - coverage run -m pytest 
 
-after_success:
+after_script:
   - bash <(curl -s https://codecov.io/bash)
-
-after_failure:
-  - bash <(curl -s https://codecov.io/bash)
-
 # notification settings
 notifications:
   email: false
