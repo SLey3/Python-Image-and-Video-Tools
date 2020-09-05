@@ -105,7 +105,7 @@ def rep():
     return repr(test_image)
 
 def test_rep():
-    test = ImageTools('C:\\Users\\ghub4\\Python-Image-and-Video-tools\\docs\\test_utils\\test_image\\testbird.jfif', False)
+    test = ImageTools(TEST_IMAGE_DIR, False)
     assert rep() == repr(test)
     
 def file_exts():
