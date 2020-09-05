@@ -8,8 +8,8 @@ from PIV import ImageTools
 from PIV.base import BINARY
 from PIV.base import FILE_EXTENSIONS
 # Image path
-TEST_VIDEO_DIR = os.getcwd() + '/docs/test_utils/test_video/pop.mp4'
-TEST_IMAGE_DIR = os.getcwd() + '/docs/test_utils/test_image/testbird.jfif'
+TEST_VIDEO_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_video/pop.mp4')
+TEST_IMAGE_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_image/testbird.jfif')
 
 # tests
 
@@ -91,7 +91,7 @@ def convertion():
     # Then calls the file extension converter
     test_image.convertFile(".png")  # in this test, we're converting a .jfif image file into a .png image file
     # after image is created, we're going to move the created .png image to the tests/image directory
-    shutil.move(os.path.join(os.getcwd(), '\\docs\\test_utils\\test_image\\testbird.png'), os.path.normpath(os.getcwd() + '\\docs\\test_utils\\result_images'))
+    shutil.move(os.path.join(os.getcwd(), '/docs/test_utils/test_image/testbird.png'), os.path.normpath(os.getcwd() + '/docs/test_utils/result_images'))
     
 def test_convertion():
     convertion()

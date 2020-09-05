@@ -44,7 +44,7 @@ class ImageTools:
             self.image_ext = '.' + self._format
             self._size = self.PIL_image.size
             self.perm_save = perm_save
-            self.image = self.image_name + self.image_ext
+            self.image = info.name(image) + info.extension(image)
             self.fp_regex = PATH_REGEX
             if perm_save:
                 self.path_list = PERM_SAVE
@@ -160,6 +160,9 @@ class ImageTools:
         image = self.image
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
+        elif file_extention in FILE_EXTENSIONS['video']:
+            raise ValueError(""""{ext} is a video extension. Please use an Image extension. Check documentation for 
+                             supported Image extenions""".format(ext=file_extention))
         else:
             raise InvalidExtention("{} is not a valid image extention.".format(file_extention))
         
@@ -168,9 +171,17 @@ class ImageTools:
             path_exc = original_path.replace('\\' + image, '')
             print(path_exc)
             os.chdir(path_exc)
+            old_image = image
+            del image
             os.rename(image, self.image_name + fe) 
+            
+            os.remove(old_image)
         else:
-            os.rename(image, self.image_name + fe) 
+            old_image = image
+            del image
+            path = self.path()
+            os.rename(path, path + '/' + self.image_name + fe) 
+            os.remove(old_image)
     
     def close(self):
         """

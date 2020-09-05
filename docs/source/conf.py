@@ -33,7 +33,6 @@ release = '1.0.0'
 # ones.
 import sphinx_rtd_theme
 extensions = [
-    'sphinx.ext.autodoc',
     'sphinx.ext.todo',
     'sphinx.ext.doctest',
     'sphinx_rtd_theme'
