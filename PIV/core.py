@@ -120,22 +120,25 @@ class ImageTools:
             else:
                 return self.raw_image
         else:
+            path = ""
             directory = os.path.abspath('.')
             for file in glob.glob('*' + self._format):
                 if self.raw_image == file:
                     path = os.path.normpath(os.path.join(directory, file))
                     if save:
                         self.path_list.append(path)
+                    return path
                 else:
                     os.chdir('..')
                     directory = os.path.abspath('.')
                     fp_found = False
+                    path = ""
                     while fp_found != True:  # noqa: E712
                         for file in glob.glob('*' + self._format):
                             if file == self.raw_image:
                                 path = os.path.normpath(os.path.join(directory, file))
                             else:
-                                pass
+                                path = ""
                         if os.path.isfile(path):
                             if save:
                                 self.path_list.append(path)
@@ -145,7 +148,7 @@ class ImageTools:
                         else:
                             os.chdir('..')
                             directory = os.path.abspath('.')
-        return path
+                    return path
     
     def convertFile(self, file_extention: str = "", with_path: bool = False): # noqa: E252
         """

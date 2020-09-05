@@ -8,7 +8,7 @@ cli:
   project: https://github.com/SLey3/Python-Image-and-Video-Tools.git
 analyze:
   modules:
-  - name: https://github.com/SLey3/Python-Image-and-Video-Tools
+  - name: PIV
     type: pip
     target: .
     dir: .
