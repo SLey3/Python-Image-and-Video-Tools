@@ -34,4 +34,4 @@ comment:
   require_changes: no
 
 ignore:
-  - PIV/core.py
+  - docs/*
