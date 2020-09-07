@@ -2,7 +2,6 @@
 
 import os
 import sys
-import shutil
 import pytest
 from PIV import ImageTools
 from PIV.base import BINARY
@@ -89,9 +88,8 @@ def convertion():
     # first initializes the Imagetools class
     test_image = ImageTools(TEST_IMAGE_DIR, False)
     # Then calls the file extension converter
-    test_image.convertFile(".png")  # in this test, we're converting a .jfif image file into a .png image file
-    # after image is created, we're going to move the created .png image to the tests/image directory
-    shutil.move(os.path.join(os.getcwd(), '/docs/test_utils/test_image/testbird.png'), os.path.normpath(os.getcwd() + '/docs/test_utils/result_images'))
+    test_image.convertFile(".png", '../result_images', True)  # in this test, we're converting a .jfif image file into a .png image file
+
     
 def test_convertion():
     convertion()
@@ -115,3 +113,6 @@ def file_exts():
 
 def test_exts():
     assert file_exts() == sorted(FILE_EXTENSIONS['image'])
+    
+    
+convertion()
