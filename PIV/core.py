@@ -18,6 +18,8 @@ from __future__ import absolute_import
 import sys
 import os
 import glob
+import shutil
+import threading
 from typing import List
 from typing import Any
 from PIL import Image
@@ -36,7 +38,7 @@ class ImageTools:
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image: str, perm_save: bool) -> Any:
+    def __init__(self, image: image_name_util, perm_save: bool) -> Any:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
@@ -149,39 +151,32 @@ class ImageTools:
                             os.chdir('..')
                             directory = os.path.abspath('.')
                     return path
-    
-    def convertFile(self, file_extention: str = "", with_path: bool = False): # noqa: E252
+    def convertFile(self, file_extention: str = "", file_dest: str = "", keep_old: bool = False): # noqa: E252
         """
         Converts the image's extension
         :param file_extension: The New file extension that would replace the old file extension
-        :param with_path: If true, The original image will be declared with its filepath and the new image file will be sent to same path as the orignal
-        :param image: created to add the chosen image extension
+        :param file_dest: The new file that replaced the old file extension would be moved to the folder specified
+        :param keep_old: If True, then the old file will not be deleted
         """  # noqa: E501
-        image = self.image
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
         elif file_extention in FILE_EXTENSIONS['video']:
-            raise ValueError(""""{ext} is a video extension. Please use an Image extension. Check documentation for 
+            raise ValueError("""{ext} is a video extension. Please use an Image extension. Check documentation for 
                              supported Image extenions""".format(ext=file_extention))
         else:
             raise InvalidExtention("{} is not a valid image extention.".format(file_extention))
         
-        if with_path:
-            original_path = self.path()
-            path_exc = original_path.replace('\\' + image, '')
-            print(path_exc)
-            os.chdir(path_exc)
-            old_image = image
-            del image
-            os.rename(image, self.image_name + fe) 
-            
-            os.remove(old_image)
-        else:
-            old_image = image
-            del image
-            path = self.path()
-            os.rename(path, path + '/' + self.image_name + fe) 
-            os.remove(old_image)
+        path, _path = (self.path(), self.path().rsplit('.', 1)[0])
+        self.PIL_image.close()
+        if keep_old:
+            src = path
+            dest = _path + '_original' + fe
+            threading.Thread(target=shutil.copy, args=[src, dest]).start()
+        os.rename(path,  _path + fe) 
+        image_name_util(_path + fe)
+        if len(file_dest) > 0:
+            shutil.move(_path + fe, file_dest)
+        self.PIL_image = Image.open(_path + fe, mode='r')
     
     def close(self):
         """
