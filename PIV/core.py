@@ -169,9 +169,10 @@ class ImageTools:
         path, _path = (self.path(), self.path().rsplit('.', 1)[0])
         self.PIL_image.close()
         if keep_old:
-            src = path
-            dest = _path + '_original' + fe
-            threading.Thread(target=shutil.copy, args=[src, dest]).start()
+            shutil.copy(path, _path + '_original' + fe)
+            # src = path
+            # dest = _path + '_original' + fe
+            # threading.Thread(target=shutil.copy, args=[src, dest]).start()
         os.rename(path,  _path + fe) 
         image_name_util(_path + fe)
         if len(file_dest) > 0:
