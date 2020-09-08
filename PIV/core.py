@@ -170,11 +170,7 @@ class ImageTools:
         self.PIL_image.close()
         if keep_old:
             src = path
-<<<<<<< HEAD
             dest = _path + '_original' + fe
-=======
-            dest = _path + fe
->>>>>>> 0a1f66298b910bb0ac17901fe202f0037fb7337b
             threading.Thread(target=shutil.copy, args=[src, dest]).start()
         os.rename(path,  _path + fe) 
         image_name_util(_path + fe)

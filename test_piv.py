@@ -8,7 +8,7 @@ from PIV.base import BINARY
 from PIV.base import FILE_EXTENSIONS
 # Image path
 TEST_VIDEO_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_video/pop.mp4')
-TEST_IMAGE_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_image/testbird.jfif')
+TEST_IMAGE_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_images/testbird.jfif')
 
 # tests
 
