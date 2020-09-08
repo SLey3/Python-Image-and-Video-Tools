@@ -151,6 +151,7 @@ class ImageTools:
                             os.chdir('..')
                             directory = os.path.abspath('.')
                     return path
+                
     def convertFile(self, file_extention: str = "", file_dest: str = "", keep_old: bool = False): # noqa: E252
         """
         Converts the image's extension
@@ -172,7 +173,7 @@ class ImageTools:
             shutil.copy(path, _path + '_original' + fe)
             # src = path
             # dest = _path + '_original' + fe
-            # threading.Thread(target=shutil.copy, args=[src, dest]).start()
+            # threading.Thread(target=shutil.copy, args=[src, dest]).start() # noq: E241
         os.rename(path,  _path + fe) 
         image_name_util(_path + fe)
         if len(file_dest) > 0:
