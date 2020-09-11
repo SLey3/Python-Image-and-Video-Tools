@@ -19,7 +19,6 @@ import sys
 import os
 import glob
 import shutil
-import threading
 from typing import List
 from typing import Any
 from PIL import Image
@@ -170,10 +169,9 @@ class ImageTools:
         path, _path = (self.path(), self.path().rsplit('.', 1)[0])
         self.PIL_image.close()
         if keep_old:
-            shutil.copy(path, _path + '_original' + fe)
-            # src = path
-            # dest = _path + '_original' + fe
-            # threading.Thread(target=shutil.copy, args=[src, dest]).start() # noq: E241
+            os.mkdir(_path.replace(self._name, '') + 'original_image')
+            copy_path = _path.replace(self._name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
+            shutil.copy(path, copy_path)
         os.rename(path,  _path + fe) 
         image_name_util(_path + fe)
         if len(file_dest) > 0:
