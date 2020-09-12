@@ -89,7 +89,7 @@ def convertion():
     # first initializes the Imagetools class
     test_image = ImageTools(TEST_IMAGE_DIR, False)
     # Then calls the file extension converter
-    test_image.convertFile(".png", '../result_images', True)  # in this test, we're converting a .jfif image file into a .png image file
+    test_image.convertFile(".png", '../result_images')  # in this test, we're converting a .jfif image file into a .png image file
     
 def test_convertion():
     convertion()

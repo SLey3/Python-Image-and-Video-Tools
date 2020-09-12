@@ -37,7 +37,7 @@ class ImageTools:
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image: image_name_util, perm_save: bool) -> Any:
+    def __init__(self, image: str, perm_save: bool) -> Any:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
@@ -173,7 +173,6 @@ class ImageTools:
             copy_path = _path.replace(self._name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
             shutil.copy(path, copy_path)
         os.rename(path,  _path + fe) 
-        image_name_util(_path + fe)
         if len(file_dest) > 0:
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
