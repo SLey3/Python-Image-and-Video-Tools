@@ -160,6 +160,7 @@ class ImageTools:
         """  # noqa: E501
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
+            name = self._name
         elif file_extention in FILE_EXTENSIONS['video']:
             raise ValueError("""{ext} is a video extension. Please use an Image extension. Check documentation for 
                              supported Image extenions""".format(ext=file_extention))
@@ -169,10 +170,10 @@ class ImageTools:
         path, _path = (self.path(), self.path().rsplit('.', 1)[0])
         self.PIL_image.close()
         if keep_old:
-            os.mkdir(_path.replace(self._name, '') + 'original_image')
-            copy_path = _path.replace(self._name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
-            shutil.copy(path, copy_path)
-        os.rename(path,  _path + fe) 
+            os.mkdir(_path.replace(name, '') + 'original_image')
+            copy_path = _path.replace(name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
+            shutil.copy(path, copy_path, follow_symlinks=True)
+        # convertion here
         if len(file_dest) > 0:
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
