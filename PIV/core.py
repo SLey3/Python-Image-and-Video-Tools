@@ -37,7 +37,7 @@ class ImageTools:
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image: str, perm_save: bool) -> Any:
+    def __init__(self, image: image_name_util, perm_save: bool) -> Any:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
@@ -150,7 +150,7 @@ class ImageTools:
                             os.chdir('..')
                             directory = os.path.abspath('.')
                     return path
-                
+
     def convertFile(self, file_extention: str = "", file_dest: str = "", keep_old: bool = False): # noqa: E252
         """
         Converts the image's extension

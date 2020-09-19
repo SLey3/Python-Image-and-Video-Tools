@@ -2,7 +2,6 @@
 
 import os
 import sys
-import shutil
 import pytest
 from PIV import ImageTools
 from PIV.base import BINARY
@@ -113,5 +112,3 @@ def file_exts():
 
 def test_exts():
     assert file_exts() == sorted(FILE_EXTENSIONS['image'])
-    
-convertion()
