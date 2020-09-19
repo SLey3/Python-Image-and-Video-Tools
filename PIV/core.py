@@ -19,7 +19,6 @@ import sys
 import os
 import glob
 import shutil
-import threading
 from typing import List
 from typing import Any
 from PIL import Image
@@ -151,6 +150,7 @@ class ImageTools:
                             os.chdir('..')
                             directory = os.path.abspath('.')
                     return path
+
     def convertFile(self, file_extention: str = "", file_dest: str = "", keep_old: bool = False): # noqa: E252
         """
         Converts the image's extension
@@ -160,6 +160,7 @@ class ImageTools:
         """  # noqa: E501
         if file_extention in FILE_EXTENSIONS['image']:
             fe = file_extention
+            name = self._name
         elif file_extention in FILE_EXTENSIONS['video']:
             raise ValueError("""{ext} is a video extension. Please use an Image extension. Check documentation for 
                              supported Image extenions""".format(ext=file_extention))
@@ -169,12 +170,12 @@ class ImageTools:
         path, _path = (self.path(), self.path().rsplit('.', 1)[0])
         self.PIL_image.close()
         if keep_old:
-            src = path
-            dest = _path + '_original' + fe
-            threading.Thread(target=shutil.copy, args=[src, dest]).start()
-        os.rename(path,  _path + fe) 
-        image_name_util(_path + fe)
-        if len(file_dest) > 0:
+            os.mkdir(_path.replace(name, '') + 'original_image')
+            copy_path = _path.replace(name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
+            shutil.copy(path, copy_path, follow_symlinks=True)
+        os.rename(path, _path + fe)
+        os.rename(path, _path + fe)
+        if len(file_dest) is not 0:
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
     
