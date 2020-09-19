@@ -173,8 +173,9 @@ class ImageTools:
             os.mkdir(_path.replace(name, '') + 'original_image')
             copy_path = _path.replace(name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
             shutil.copy(path, copy_path, follow_symlinks=True)
-        # convertion here
-        if len(file_dest) > 0:
+        os.rename(path, _path + fe)
+        os.rename(path, _path + fe)
+        if len(file_dest) is not 0:
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
     
