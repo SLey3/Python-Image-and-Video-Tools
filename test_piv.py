@@ -2,13 +2,13 @@
 
 import os
 import sys
-import pytest
+# import pytest
 from PIV import ImageTools
 from PIV.base import BINARY
 from PIV.base import FILE_EXTENSIONS
 # Image path
-TEST_VIDEO_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_video/pop.mp4')
-TEST_IMAGE_DIR = os.path.normpath(os.getcwd() + '/docs/test_utils/test_images/testbird.jfif')
+TEST_VIDEO_DIR = os.path.normpath(os.path.abspath('.') + '/docs/test_utils/test_video/pop.mp4')
+TEST_IMAGE_DIR = os.path.normpath(os.path.abspath('.') + '/docs/test_utils/test_images/testbird.jfif')
 
 # tests
 
@@ -52,7 +52,7 @@ def name():
 def test_name():
     assert name() == 'testbird'
  
-@pytest.fixture
+#@pytest.fixture
 def size():
     # first initializes the Image tools class
     test_image = ImageTools(TEST_IMAGE_DIR, False)

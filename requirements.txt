@@ -1,4 +1,6 @@
 # Module Dependencies
 pillow==7.2.0
+matplotlib==3.3.2
+numpy==1.19.2
 # Setup Dependency
 rstparse==1.0

@@ -19,8 +19,12 @@ import sys
 import os
 import glob
 import shutil
+import matplotlib.pyplot as plt
+import numpy as np
 from typing import List
 from typing import Any
+from typing import Optional
+from typing import Tuple
 from PIL import Image
 from PIL import UnidentifiedImageError
 import io
@@ -37,7 +41,7 @@ class ImageTools:
     :param image: these required argument is to initialize the class
     :param perm_save: If true, the PERMS_SAVE list will be used to save paths 
     """
-    def __init__(self, image: image_name_util, perm_save: bool) -> Any:
+    def __init__(self, image: str, perm_save: bool) -> Any:
         if check_image_file(image, info.name(image), info.extension(image)):
             self.raw_image = image
             self.image_name = self._name
@@ -153,7 +157,7 @@ class ImageTools:
 
     def convertFile(self, file_extention: str = "", file_dest: str = "", keep_old: bool = False): # noqa: E252
         """
-        Converts the image's extension
+        Converts the image's extension to the desired extension.
         :param file_extension: The New file extension that would replace the old file extension
         :param file_dest: The new file that replaced the old file extension would be moved to the folder specified
         :param keep_old: If True, then the old file will not be deleted
@@ -171,13 +175,82 @@ class ImageTools:
         self.PIL_image.close()
         if keep_old:
             os.mkdir(_path.replace(name, '') + 'original_image')
-            copy_path = _path.replace(name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format)
+            copy_path = _path.replace(name, '') + '\\original_image\\{name}_original{ext}'.format(name=self._name, ext=self._format) # noqa: E501
             shutil.copy(path, copy_path, follow_symlinks=True)
         os.rename(path, _path + fe)
-        os.rename(path, _path + fe)
-        if len(file_dest) is not 0:
+        os.rename(path + fe, _path + fe)
+        self.__init__(_path + fe, self.perm_save)
+        self.PIL_image.close()
+        if len(file_dest) is not 0: # noqa: F632
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
+        
+    @staticmethod
+    def graph(axis_length: Optional[int] = None, points: List[Tuple[int, int]] = [],
+              title: Optional[str] = None, image_extension: str = ".jpeg",
+              image_name: str = "",
+              x_title: Optional[str] = None, y_title: Optional[str] = None,
+              multiple_lines: bool = False, include_legend: bool = False,
+              labels: List[str] = [], with_linspace: bool = False,
+              quadratic: Optional[List[Tuple[int, int]]] = None, 
+              cubic: Optional[List[Tuple[int, int]]] = None, 
+              linear: Optional[List[Tuple[int, int]]] = None,
+              lin_start: Optional[int] = None, lin_end: Optional[int] = None,
+              lin_num: Optional[int] = None, lin_linear: bool = True,
+              lin_quadratic: bool = False, lin_cubic: bool = False
+              ):
+        """
+        Creates an Image that contains the created graph. 
+        :param axis_length: The length of both the x and y axis
+        :param points: List of tuples that contains x and y coordinates
+        :param title: Title of the Graph
+        :param image_extension: The extension for the Graph Image. The default is .jpeg
+        :param image_name: Name of the Graphs image
+        :param x_title: The subtitle for the x axis
+        :param y_title: The subtitle for the y axis
+        :param multiple_lines: If True, then this would allow for multiple lines to be created.
+        Default is set to False.
+        :param include_legend: This would include the graphs legend. Default Value is False
+        :param labels: The labels for the graphs lines. This can be also used if :param multiple_points:
+        is in its Default value. Only set labels if :param include_legend: is set to True.
+        :param with_linspace: If set to true, Don't set any points for :param points: as the graph will depend
+        on `np.linspace` for the graphs lines.
+        :param quadratic: Number of quadratic lines should be in the graph. Default is 0
+        :param cubic: Number of cubic lines should be in the graph. Default is 0
+        :param linear: Number of linear lines should be in the graph. Default is 0
+        :param lin_start: The starting value of the linspace sequence
+        :param lin_end: The end value of the linspace sequence
+        :param lin_num: The number of samples to generate. The default is 50.
+        :param lin_linear: If true, the Linear line in the graph is based on linspace. Default is True.
+        :param lin_quadratic: If true of Quadratic lines in the graph is based on linspace
+        :param lin_cubic: If true of Cubic lines in the graph is based on linspace
+        For more information on how to use this function, go to the documention.
+        """
+        if with_linspace:
+            x = np.linspace(lin_start, lin_end, num=lin_num if not None else 50)
+            if len(labels) > 3:
+                raise IndexError("The value of labels must not exceed 3 in order to use linspace.")
+            if lin_linear:
+                plt.plot(x, x, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+            if lin_quadratic:
+                plt.plot(x, x**2, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+            if lin_cubic:
+                plt.plot(x, x**3, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+            if title is not None:
+                plt.title(title)
+            if x_title is not None:
+                plt.xlabel(x_title)
+            if y_title is not None:
+                plt.ylabel(y_title)
+            if include_legend:
+                plt.legend()
+            if image_extension not in FILE_EXTENSIONS['image']:
+                raise InvalidExtention("{ext} is not a valid file extention or is currently not supported by PIV.".format(ext=image_extension))
+            plt.savefig("{img_name}{ext}".format(img_name=image_name, ext=image_extension))
+            
+            
+        else:
+            pass
     
     def close(self):
         """
@@ -185,9 +258,8 @@ class ImageTools:
         """
         if self.path_list == TEMP_SAVE:
             self.path_list.clear()
-            
-        del self.path_list
         self.PIL_image.close()
+        del self
             
     def __enter__(self):
         """
