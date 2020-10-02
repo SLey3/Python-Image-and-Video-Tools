@@ -26,7 +26,6 @@ from typing import Any
 from typing import Optional
 from typing import Tuple
 from PIL import Image
-from PIL import UnidentifiedImageError
 import io
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
@@ -181,43 +180,36 @@ class ImageTools:
         os.rename(path + fe, _path + fe)
         self.__init__(_path + fe, self.perm_save)
         self.PIL_image.close()
-        if len(file_dest) is not 0: # noqa: F632
+        if len(file_dest) != 0: # noqa: F632
             shutil.move(_path + fe, file_dest)
         self.PIL_image = Image.open(_path + fe, mode='r')
         
     @staticmethod
-    def graph(axis_length: Optional[int] = None, points: List[Tuple[int, int]] = [],
+    def graph(x_length: List[int] = [], y_length: List[int] = [], points: List[List[Tuple[int, int]]] = [],
               title: Optional[str] = None, image_extension: str = ".jpeg",
               image_name: str = "",
               x_title: Optional[str] = None, y_title: Optional[str] = None,
-              multiple_lines: bool = False, include_legend: bool = False,
+              include_legend: bool = False,
               labels: List[str] = [], with_linspace: bool = False,
-              quadratic: Optional[List[Tuple[int, int]]] = None, 
-              cubic: Optional[List[Tuple[int, int]]] = None, 
-              linear: Optional[List[Tuple[int, int]]] = None,
               lin_start: Optional[int] = None, lin_end: Optional[int] = None,
               lin_num: Optional[int] = None, lin_linear: bool = True,
               lin_quadratic: bool = False, lin_cubic: bool = False
               ):
         """
         Creates an Image that contains the created graph. 
-        :param axis_length: The length of both the x and y axis
+        :param x_length: The minimum and maximum length for the x axis
+        :param y_length: THe minimum and maximum length for the y axis
         :param points: List of tuples that contains x and y coordinates
         :param title: Title of the Graph
         :param image_extension: The extension for the Graph Image. The default is .jpeg
         :param image_name: Name of the Graphs image
         :param x_title: The subtitle for the x axis
         :param y_title: The subtitle for the y axis
-        :param multiple_lines: If True, then this would allow for multiple lines to be created.
-        Default is set to False.
         :param include_legend: This would include the graphs legend. Default Value is False
         :param labels: The labels for the graphs lines. This can be also used if :param multiple_points:
         is in its Default value. Only set labels if :param include_legend: is set to True.
         :param with_linspace: If set to true, Don't set any points for :param points: as the graph will depend
         on `np.linspace` for the graphs lines.
-        :param quadratic: Number of quadratic lines should be in the graph. Default is 0
-        :param cubic: Number of cubic lines should be in the graph. Default is 0
-        :param linear: Number of linear lines should be in the graph. Default is 0
         :param lin_start: The starting value of the linspace sequence
         :param lin_end: The end value of the linspace sequence
         :param lin_num: The number of samples to generate. The default is 50.
@@ -231,11 +223,11 @@ class ImageTools:
             if len(labels) > 3:
                 raise IndexError("The value of labels must not exceed 3 in order to use linspace.")
             if lin_linear:
-                plt.plot(x, x, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+                plt.plot(x, x, label=labels.pop(0))
             if lin_quadratic:
-                plt.plot(x, x**2, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+                plt.plot(x, x**2, label=labels.pop(0))
             if lin_cubic:
-                plt.plot(x, x**3, label=labels.pop(0) if labels[0] != "" else labels.remove(0))
+                plt.plot(x, x**3, label=labels.pop(0))
             if title is not None:
                 plt.title(title)
             if x_title is not None:
@@ -245,12 +237,24 @@ class ImageTools:
             if include_legend:
                 plt.legend()
             if image_extension not in FILE_EXTENSIONS['image']:
-                raise InvalidExtention("{ext} is not a valid file extention or is currently not supported by PIV.".format(ext=image_extension))
+                raise InvalidExtention(
+                    "{ext} is not a valid file extention or is currently not supported by PIV.".format(
+                        ext=image_extension))
             plt.savefig("{img_name}{ext}".format(img_name=image_name, ext=image_extension))
-            
-            
         else:
-            pass
+            plt.xlim(x_length[0], x_length[1])
+            plt.ylim(y_length[0], y_length[1])
+            for line in points:
+                x = [x_point[0] for x_point in line]
+                y = [y_point[1] for y_point in line]
+                plt.plot(x, y, label=labels.pop(0))
+            if image_extension not in FILE_EXTENSIONS['image']:
+                raise InvalidExtention(
+                    "{ext} is not a valid file extention or is currently not supported by PIV.".format(
+                        ext=image_extension))
+            if include_legend:
+                plt.legend()
+            plt.savefig("{img_name}{ext}".format(img_name=image_name, ext=image_extension))
     
     def close(self):
         """
