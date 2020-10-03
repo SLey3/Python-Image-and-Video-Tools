@@ -220,7 +220,7 @@ class ImageTools:
         if with_linspace:
             x = np.linspace(lin_start, lin_end, num=lin_num if not None else 50)
             if len(labels) > 3:
-                raise IndexError("The value of labels must not exceed 3 in order to use linspace.")
+                raise IndexError("The total number of indexes must not exceed 3 in order to use linspace.")
             if lin_linear:
                 plt.plot(x, x, label=labels.pop(0))
             if lin_quadratic:
@@ -253,6 +253,12 @@ class ImageTools:
                         ext=image_extension))
             if include_legend:
                 plt.legend()
+            if title is not None:
+                plt.title(title)
+            if x_title is not None:
+                plt.xlabel(x_title)
+            if y_title is not None:
+                plt.ylabel(y_title)
             plt.savefig("{img_name}{ext}".format(img_name=image_name, ext=image_extension))
     
     def close(self):

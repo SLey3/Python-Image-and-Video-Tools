@@ -5,8 +5,8 @@ import sys
 import shutil
 # import pytest
 from PIV import ImageTools
-from PIV.base import BINARY
-from PIV.base import FILE_EXTENSIONS
+from PIV.base import BINARY, FILE_EXTENSIONS
+
 # Image path
 TEST_VIDEO_DIR = os.path.normpath(os.path.abspath('.') + '/docs/test_utils/test_video/pop.mp4')
 TEST_IMAGE_DIR = os.path.normpath(os.path.abspath('.') + '/docs/test_utils/test_images/testbird.jfif')
@@ -113,3 +113,38 @@ def file_exts():
 
 def test_exts():
     assert file_exts() == sorted(FILE_EXTENSIONS['image'])
+    
+def test_graph():
+    # Calls the graph function from the ImageTools class
+    ImageTools.graph(
+        [0,10], [0,10], [
+            [
+                (0,0), (2,2), (4,4), (6,6), (8,8), (10,10)
+                ], [
+                    (0,5), (2,5), (3,5), (4,7), (5,7), (6,8), (7,8), (8,10), (10,10)
+                    ],
+                [
+                    (3,3), (6,6), (9,9), (9,6), (10,3)
+                ]
+            ],
+        title="Test Example without Numpy Linspace", y_title= "Y Axis", x_title="X Axis", 
+        labels=["line#1", "line#2", "line#3"], image_name="Graph#1", include_legend=True)
+    DEST_PATH = os.path.abspath('./docs/test_utils/result_images')
+    SRC_PATH = os.path.join(os.path.abspath('.'), "Graph#1.jpeg")
+    shutil.move(SRC_PATH, DEST_PATH)
+    TEST_PATH = os.path.join(DEST_PATH, "Graph#1.jpeg")
+    assert os.path.isfile(TEST_PATH) == True
+    
+# def test_lingraph():
+#     # Calls the graph function from the ImageTools class
+#     ImageTools.graph(with_linspace=True, lin_start=5, lin_end=50, lin_num=100,
+#                      lin_quadratic=True, lin_cubic=True, 
+#                      labels=["Lin linear", "Lin Quadratic", "Lin Cubic"], include_legend=True, 
+#                      title="Graph with Numpy Linspace", y_title="Y axis", x_title="X axis", image_extension=".png",
+#                      image_name="Linspace_Graph")
+    
+#     DEST_PATH = os.path.abspath('./docs/test_utils/result_images')
+#     SRC_PATH = os.path.join(os.path.abspath('.'), "Linspace_Graph.png")
+#     shutil.move(SRC_PATH, DEST_PATH)
+#     TEST_PATH = os.path.join(DEST_PATH, "Linspace_Graph.png")
+#     assert os.path.isfile(TEST_PATH) == True
