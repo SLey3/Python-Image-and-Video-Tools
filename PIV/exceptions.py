@@ -41,3 +41,9 @@ class InvalidExtention(PIVerror):
     Error raised when incorrect file extension is used.
     """
     pass
+
+class ModuleWarning(Warning):
+    """
+    Warning raised when a module doesn't meet the required version.
+    """
+    pass

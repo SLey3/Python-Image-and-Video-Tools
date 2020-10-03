@@ -40,23 +40,23 @@ def check_image_file(file_path, name, ext) -> bool:
             logger.log(3, "Image file not found or does not exist.")
             return False
         
-def check_video_file(file_path, name, ext) -> bool:
-    """
-    checks if the file is a video file or if the video exists
-    """
-    logger = logging.getLogger(__name__)
-    if os.path.exists(file_path) and ext in FILE_EXTENSIONS['video']:
-        logger.log(0, "File is a Video file and exists.")
-        return True
-    else:
-        file_tuple = (name, ext)
-        file_name = name + ext
-        if file_tuple[1] in FILE_EXTENSIONS['image'] and os.path.exists(file_path):
-            logger.log(1, "File was an Image File.")
-            raise ValueError("{name} is not a Video file.".format(name=file_name))
-        elif os.path.exists(file_path) and file_tuple[1] not in FILE_EXTENSIONS['video']:
-            logger.log(2, "File does exists but the file extension is not recognized.")
-            raise InvalidExtention("{extension} is not a supported file extension or is not an extension.".format(extension=file_tuple[1]))  # noqa: E501
-        else:
-            logger.log(3, "Video file not found or does not exist.")
-            return False
+# def check_video_file(file_path, name, ext) -> bool:
+#     """
+#     checks if the file is a video file or if the video exists
+#     """
+#     logger = logging.getLogger(__name__)
+#     if os.path.exists(file_path) and ext in FILE_EXTENSIONS['video']:
+#         logger.log(0, "File is a Video file and exists.")
+#         return True
+#     else:
+#         file_tuple = (name, ext)
+#         file_name = name + ext
+#         if file_tuple[1] in FILE_EXTENSIONS['image'] and os.path.exists(file_path):
+#             logger.log(1, "File was an Image File.")
+#             raise ValueError("{name} is not a Video file.".format(name=file_name))
+#         elif os.path.exists(file_path) and file_tuple[1] not in FILE_EXTENSIONS['video']:
+#             logger.log(2, "File does exists but the file extension is not recognized.")
+#             raise InvalidExtention("{extension} is not a supported file extension or is not an extension.".format(extension=file_tuple[1]))  # noqa: E501
+#         else:
+#             logger.log(3, "Video file not found or does not exist.")
+#             return False

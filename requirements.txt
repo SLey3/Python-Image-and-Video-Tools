@@ -1,6 +1,6 @@
 # Module Dependencies
-pillow==7.2.0
-matplotlib==3.3.2
-numpy==1.19.2
+pillow; python_version < '3.6'
+matplotlib; python_version < '3.6'
+numpy; python_version < '3.6'
 # Setup Dependency
-rstparse==1.0
+rstparse==1.0; python_version < '3.6'

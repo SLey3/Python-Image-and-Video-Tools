@@ -14,11 +14,11 @@
 """
 Heart of the module
 """
-from __future__ import absolute_import
 import sys
 import os
 import glob
 import shutil
+import io
 import matplotlib.pyplot as plt
 import numpy as np
 from typing import List
@@ -26,7 +26,6 @@ from typing import Any
 from typing import Optional
 from typing import Tuple
 from PIL import Image
-import io
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))

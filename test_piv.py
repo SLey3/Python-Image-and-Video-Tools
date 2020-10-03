@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 # import pytest
 from PIV import ImageTools
 from PIV.base import BINARY

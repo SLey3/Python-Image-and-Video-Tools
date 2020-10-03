@@ -24,4 +24,3 @@ import PIV.base
 import PIV.exceptions
 import PIV.check
 from PIV.core import *
-version = __version__

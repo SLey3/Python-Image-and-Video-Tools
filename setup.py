@@ -4,6 +4,7 @@ import warnings
 from typing import List
 from itertools import chain
 from PIV import __version__
+from PIV.exceptions import ModuleWarning
 from numpy import __version__ as numpy_version
 from matplotlib import __version__ as matplotlib_version
 from PIL import __version__ as pillow_version
@@ -16,7 +17,7 @@ if numpy_version != "1.19.2":
     Linspace may or may not exist in your numpy version of {numpy_version}.
     Consider upgrading numpy.
     """
-    warnings.warn(msg, DeprecationWarning)
+    warnings.warn(msg, ModuleWarning)
     
 if matplotlib_version != "3.3.2":
     msg = f"""
@@ -24,7 +25,7 @@ if matplotlib_version != "3.3.2":
     Some functions may or may not exist in your matplotlib version of {matplotlib_version}.
     Consider upgrading matplotlib.
     """
-    warnings.warn(msg, DeprecationWarning)
+    warnings.warn(msg, ModuleWarning)
     
 if pillow_version != "7.2.0":
     msg = f"""
@@ -33,7 +34,7 @@ if pillow_version != "7.2.0":
     Your current Pillow version: {pillow_version}.
     Consider upgrading Pillow.
     """
-    warnings.warn(msg, DeprecationWarning)
+    warnings.warn(msg, ModuleWarning)
     
 # -------------------------------------
 from pathlib import Path
@@ -54,7 +55,7 @@ def get_requirements(filename) -> List[str]:
     return [line for line in lineiter if line and not line.startswith("#")]
 
 
-if "setuptools" in sys.modules:
+try:
     from setuptools import setup, find_packages
     module_requirements = get_requirements(CURRENT_PATH / "requirements.txt")
 
@@ -64,9 +65,8 @@ if "setuptools" in sys.modules:
     }
 
     extra_reqs['all'] = list(chain(extra_reqs.values()))
-    
     with_setuptools = True
-else:
+except ImportError:
     from distutils.core import setup
     
     reqs = {
@@ -96,7 +96,7 @@ def get_l_desc() -> str:
             
         del doc
         cl_doc = []
-        with open(CURRENT_PATH / 'docs' / 'CHANGELOG.rst', encoding='utf-8') as c:
+        with open(os.path.join(os.path.abspath('./docs'), 'CHANGELOG.rst'), encoding='utf-8') as c:
             parser.read(c)
             
         parser.parse()
@@ -115,7 +115,7 @@ def get_l_desc() -> str:
             'utf-8',).read() +  # noqa: W504
             '\n\n' +  # noqa: W504
             codecs.open(
-                CURRENT_PATH / 'docs' / 'CHANGELOG.rst', 'r',
+                os.path.join(os.path.abspath('./docs'), 'CHANGELOG.rst'), 'r',
                 'utf-8').read())
         
     return long_desc
@@ -153,8 +153,8 @@ if with_setuptools:
         ],
         platforms='win32',
         install_requires=module_requirements,
-        extras_require=extra_reqs['all'],
-        tests_require=extra_reqs['test'],
+        # extras_require=extra_reqs['all'], 
+        # tests_require=extra_reqs['test'], Bugged parameter
         python_requires=">=3.6",
         classifiers=[
             'Development Status :: 3 - Alpha',
